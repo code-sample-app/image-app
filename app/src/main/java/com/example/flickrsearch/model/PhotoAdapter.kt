@@ -30,7 +30,12 @@ class PhotoAdapter(val photos: MutableList<Photo> = mutableListOf()) : RecyclerV
     override fun getItemCount(): Int = photos.size
 
     override fun onBindViewHolder(holder: PhotosViewHolder, position: Int) {
-        holder.bind(photos[position])
+        holder.bind(photos[getPagingPosition(position)])
+    }
+
+    private fun getPagingPosition(position: Int) : Int {
+        // TODO: load next page at end of list
+        return photos.size / DEFAULT_PAGE_SIZE + position
     }
 
     inner class PhotosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -57,3 +62,4 @@ class PhotoAdapter(val photos: MutableList<Photo> = mutableListOf()) : RecyclerV
 }
 
 const val IMAGE_SIDE_PX = 400
+const val DEFAULT_PAGE_SIZE = 99
